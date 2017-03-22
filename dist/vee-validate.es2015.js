@@ -3,13 +3,118 @@
  * (c) 2017 Abdelrahman Awad
  * @license MIT
  */
-var alpha = (value) => /^[a-zA-Z]*$/.test(value);
+/**
+ * Some Alpha Regex helpers.
+ * https://github.com/chriso/validator.js/blob/master/src/lib/alpha.js
+ */
 
-var alpha_dash = (value) => /^[a-zA-Z0-9_-]*$/.test(value);
+const alpha$1 = {
+  en: /^[A-Z]*$/i,
+  cs: /^[A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]*$/i,
+  da: /^[A-ZÆØÅ]*$/i,
+  de: /^[A-ZÄÖÜß]*$/i,
+  es: /^[A-ZÁÉÍÑÓÚÜ]*$/i,
+  fr: /^[A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]*$/i,
+  nl: /^[A-ZÉËÏÓÖÜ]*$/i,
+  hu: /^[A-ZÁÉÍÓÖŐÚÜŰ]*$/i,
+  pl: /^[A-ZĄĆĘŚŁŃÓŻŹ]*$/i,
+  pt: /^[A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ]*$/i,
+  ru: /^[А-ЯЁ]*$/i,
+  sr: /^[A-ZČĆŽŠĐ]*$/i,
+  tr: /^[A-ZÇĞİıÖŞÜ]*$/i,
+  uk: /^[А-ЩЬЮЯЄIЇҐ]*$/i,
+  ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/
+};
 
-var alpha_num = (value) => /^[a-zA-Z0-9]*$/.test(value);
+const alphaSpaces = {
+  en: /^[A-Z\s]*$/i,
+  cs: /^[A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ\s]*$/i,
+  da: /^[A-ZÆØÅ\s]*$/i,
+  de: /^[A-ZÄÖÜß\s]*$/i,
+  es: /^[A-ZÁÉÍÑÓÚÜ\s]*$/i,
+  fr: /^[A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ\s]*$/i,
+  nl: /^[A-ZÉËÏÓÖÜ\s]*$/i,
+  hu: /^[A-ZÁÉÍÓÖŐÚÜŰ\s]*$/i,
+  pl: /^[A-ZĄĆĘŚŁŃÓŻŹ\s]*$/i,
+  pt: /^[A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ\s]*$/i,
+  ru: /^[А-ЯЁ\s]*$/i,
+  sr: /^[A-ZČĆŽŠĐ\s]*$/i,
+  tr: /^[A-ZÇĞİıÖŞÜ\s]*$/i,
+  uk: /^[А-ЩЬЮЯЄIЇҐ\s]*$/i,
+  ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ\s]*$/
+};
 
-var alpha_spaces = (value) => /^[a-zA-Z\s]*$/.test(value);
+const alphanumeric = {
+  en: /^[0-9A-Z]*$/i,
+  cs: /^[0-9A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]*$/i,
+  da: /^[0-9A-ZÆØÅ]$/i,
+  de: /^[0-9A-ZÄÖÜß]*$/i,
+  es: /^[0-9A-ZÁÉÍÑÓÚÜ]*$/i,
+  fr: /^[0-9A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]*$/i,
+  hu: /^[0-9A-ZÁÉÍÓÖŐÚÜŰ]*$/i,
+  nl: /^[0-9A-ZÉËÏÓÖÜ]*$/i,
+  pl: /^[0-9A-ZĄĆĘŚŁŃÓŻŹ]*$/i,
+  pt: /^[0-9A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ]*$/i,
+  ru: /^[0-9А-ЯЁ]*$/i,
+  sr: /^[0-9A-ZČĆŽŠĐ]*$/i,
+  tr: /^[0-9A-ZÇĞİıÖŞÜ]*$/i,
+  uk: /^[0-9А-ЩЬЮЯЄIЇҐ]*$/i,
+  ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/
+};
+
+const alphaDash = {
+  en: /^[0-9A-Z_-]*$/i,
+  cs: /^[0-9A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ_-]*$/i,
+  da: /^[0-9A-ZÆØÅ_-]*$/i,
+  de: /^[0-9A-ZÄÖÜß_-]*$/i,
+  es: /^[0-9A-ZÁÉÍÑÓÚÜ_-]*$/i,
+  fr: /^[0-9A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ_-]*$/i,
+  nl: /^[0-9A-ZÉËÏÓÖÜ_-]*$/i,
+  hu: /^[0-9A-ZÁÉÍÓÖŐÚÜŰ_-]*$/i,
+  pl: /^[0-9A-ZĄĆĘŚŁŃÓŻŹ_-]*$/i,
+  pt: /^[0-9A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ_-]*$/i,
+  ru: /^[0-9А-ЯЁ_-]*$/i,
+  sr: /^[0-9A-ZČĆŽŠĐ_-]*$/i,
+  tr: /^[0-9A-ZÇĞİıÖŞÜ_-]*$/i,
+  uk: /^[0-9А-ЩЬЮЯЄIЇҐ_-]*$/i,
+  ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ_-]*$/
+};
+
+var alpha$$1 = (value, [locale] = [null]) => {
+  // Match at least one locale.
+  if (! locale) {
+    return Object.keys(alpha$1).some(loc => alpha$1[loc].test(value));
+  }
+
+  return (alpha$1[locale] || alpha$1.en).test(value);
+};
+
+var alpha_dash = (value, [locale] = [null]) => {
+  // Match at least one locale.
+  if (! locale) {
+    return Object.keys(alphaDash).some(loc => alphaDash[loc].test(value));
+  }
+
+  return (alphaDash[locale] || alphaDash.en).test(value);
+};
+
+var alpha_num = (value, [locale] = [null]) => {
+  // Match at least one locale.
+  if (! locale) {
+    return Object.keys(alphanumeric).some(loc => alphanumeric[loc].test(value));
+  }
+
+  return (alphanumeric[locale] || alphanumeric.en).test(value);
+};
+
+var alpha_spaces = (value, [locale] = [null]) => {
+  // Match at least one locale.
+  if (! locale) {
+    return Object.keys(alphaSpaces).some(loc => alphaSpaces[loc].test(value));
+  }
+
+  return (alphaSpaces[locale] || alphaSpaces.en).test(value);
+};
 
 var between = (value, [min, max]) => Number(min) <= value && Number(max) >= value;
 
@@ -302,6 +407,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var default_email_options = {
   allow_display_name: false,
+  require_display_name: false,
   allow_utf8_local_part: true,
   require_tld: true
 };
@@ -320,10 +426,12 @@ function isEmail(str, options) {
   (0, _assertString2.default)(str);
   options = (0, _merge2.default)(options, default_email_options);
 
-  if (options.allow_display_name) {
+  if (options.require_display_name || options.allow_display_name) {
     var display_email = str.match(displayName);
     if (display_email) {
       str = display_email[1];
+    } else if (options.require_display_name) {
+      return false;
     }
   }
 
@@ -598,7 +706,7 @@ function checkHost(host, matches) {
 
 function isURL(url, options) {
   (0, _assertString2.default)(url);
-  if (!url || url.length >= 2083 || /\s/.test(url)) {
+  if (!url || url.length >= 2083 || /[\s<>]/.test(url)) {
     return false;
   }
   if (url.indexOf('mailto:') === 0) {
@@ -698,7 +806,7 @@ var Rules = {
   alpha_dash,
   alpha_num,
   alpha_spaces,
-  alpha,
+  alpha: alpha$$1,
   between,
   confirmed,
   credit_card,
@@ -969,9 +1077,7 @@ const getScope = (el) => {
  */
 const debounce = (callback, wait = 0, immediate) => {
   let timeout;
-  if (wait == 0) {
-    return callback;
-  }
+
   return (...args) => {
     const later = () => {
       timeout = null;
@@ -998,9 +1104,8 @@ const warn = (message) => {
 /**
  * Checks if the value is an object.
  */
-const isObject = (object) => {
-  return object !== null && object && typeof object === 'object' && ! Array.isArray(object);
-};
+const isObject = (object) =>
+  object !== null && object && typeof object === 'object' && ! Array.isArray(object);
 
 /**
  * Checks if a function is callable.
@@ -1025,8 +1130,8 @@ const addClass = (el, className) => {
   if (el.classList) {
     el.classList.add(className);
     return;
-  } 
-  
+  }
+
   if (!hasClass(el, className)) {
     el.className += ` ${className}`;
   }
@@ -1115,7 +1220,7 @@ const find = (array, predicate) => {
 
 /**
  * Gets the rules from a binding value or the element dataset.
- * 
+ *
  * @param {String} expression The binding expression.
  * @param {Object|String} value The binding value.
  * @param {element} el The element.
@@ -1131,7 +1236,7 @@ const getRules = (expression, value, el) => {
   }
 
   if (~['string', 'object'].indexOf(typeof value.rules)) {
-    return value.rules
+    return value.rules;
   }
 
   return value;
@@ -2268,9 +2373,10 @@ class Validator
   /**
    * Validates each value against the corresponding field validations.
    * @param  {object} values The values to be validated.
+   * @param  {String} scope The scope to be applied on validation.
    * @return {Promise} Returns a promise with the validation result.
    */
-  validateAll(values) {
+  validateAll(values, scope = '__global__') {
     let normalizedValues;
     if (! values || typeof values === 'string') {
       this.errorBag.clear(values);
@@ -2279,7 +2385,8 @@ class Validator
       normalizedValues = {};
       Object.keys(values).forEach(key => {
         normalizedValues[key] = {
-          value: values[key]
+          value: values[key],
+          scope
         };
       });
     }
@@ -2290,8 +2397,8 @@ class Validator
       false // do not throw
     ));
 
-    return Promise.all(promises).then(values => {
-      const valid = values.every(t => t);
+    return Promise.all(promises).then(results => {
+      const valid = results.every(t => t);
       if (! valid) {
         throw new ValidatorException('Validation Failed');
       }
@@ -2472,9 +2579,7 @@ class ListenerGenerator
   _validate(value) {
     return this.vm.$validator.validate(
       this.fieldName, value, this.scope || getScope(this.el)
-      ).catch(result => {
-        return result;
-      });
+      ).catch(result => result);
   }
 
     /**
@@ -2507,8 +2612,11 @@ class ListenerGenerator
           return;
         }
 
-        target.addEventListener('input', listener);
-        this.callbacks.push({ name: 'input', listener, el: target });
+        const events = getDataAttribute(this.el, 'validate-on') || 'input|blur';
+        events.split('|').forEach(e => {
+          target.addEventListener(e, listener);
+          this.callbacks.push({ name: e, listener, el: target });
+        });
       });
     }
   }
@@ -2692,9 +2800,7 @@ class ListenerGenerator
         const debounced = debounce((value) => {
           this.vm.$validator.validate(
             this.fieldName, value, this.scope || getScope(this.el)
-            ).catch(result => {
-              return result
-            });
+          ).catch(result => result);
         }, getDataAttribute(this.el, 'delay') || this.options.delay);
         this.unwatch = this.vm.$watch(arg, debounced, { deep: true });
         // No need to attach it on element as it will use the vue watcher.
@@ -2724,6 +2830,10 @@ class ListenerGenerator
         listeners: this
       }
     );
+
+    if (this.binding.modifiers.disable) {
+      return;
+    }
 
     this._attachValidatorEvent();
     const arg = this._getArg();

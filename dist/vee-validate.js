@@ -9,13 +9,130 @@
         (global.VeeValidate = factory());
 }(this, (function () { 'use strict';
 
-var alpha = function (value) { return /^[a-zA-Z]*$/.test(value); };
+/**
+ * Some Alpha Regex helpers.
+ * https://github.com/chriso/validator.js/blob/master/src/lib/alpha.js
+ */
 
-var alpha_dash = function (value) { return /^[a-zA-Z0-9_-]*$/.test(value); };
+var alpha$1 = {
+  en: /^[A-Z]*$/i,
+  cs: /^[A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]*$/i,
+  da: /^[A-ZÆØÅ]*$/i,
+  de: /^[A-ZÄÖÜß]*$/i,
+  es: /^[A-ZÁÉÍÑÓÚÜ]*$/i,
+  fr: /^[A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]*$/i,
+  nl: /^[A-ZÉËÏÓÖÜ]*$/i,
+  hu: /^[A-ZÁÉÍÓÖŐÚÜŰ]*$/i,
+  pl: /^[A-ZĄĆĘŚŁŃÓŻŹ]*$/i,
+  pt: /^[A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ]*$/i,
+  ru: /^[А-ЯЁ]*$/i,
+  sr: /^[A-ZČĆŽŠĐ]*$/i,
+  tr: /^[A-ZÇĞİıÖŞÜ]*$/i,
+  uk: /^[А-ЩЬЮЯЄIЇҐ]*$/i,
+  ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/
+};
 
-var alpha_num = function (value) { return /^[a-zA-Z0-9]*$/.test(value); };
+var alphaSpaces = {
+  en: /^[A-Z\s]*$/i,
+  cs: /^[A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ\s]*$/i,
+  da: /^[A-ZÆØÅ\s]*$/i,
+  de: /^[A-ZÄÖÜß\s]*$/i,
+  es: /^[A-ZÁÉÍÑÓÚÜ\s]*$/i,
+  fr: /^[A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ\s]*$/i,
+  nl: /^[A-ZÉËÏÓÖÜ\s]*$/i,
+  hu: /^[A-ZÁÉÍÓÖŐÚÜŰ\s]*$/i,
+  pl: /^[A-ZĄĆĘŚŁŃÓŻŹ\s]*$/i,
+  pt: /^[A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ\s]*$/i,
+  ru: /^[А-ЯЁ\s]*$/i,
+  sr: /^[A-ZČĆŽŠĐ\s]*$/i,
+  tr: /^[A-ZÇĞİıÖŞÜ\s]*$/i,
+  uk: /^[А-ЩЬЮЯЄIЇҐ\s]*$/i,
+  ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ\s]*$/
+};
 
-var alpha_spaces = function (value) { return /^[a-zA-Z\s]*$/.test(value); };
+var alphanumeric = {
+  en: /^[0-9A-Z]*$/i,
+  cs: /^[0-9A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]*$/i,
+  da: /^[0-9A-ZÆØÅ]$/i,
+  de: /^[0-9A-ZÄÖÜß]*$/i,
+  es: /^[0-9A-ZÁÉÍÑÓÚÜ]*$/i,
+  fr: /^[0-9A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]*$/i,
+  hu: /^[0-9A-ZÁÉÍÓÖŐÚÜŰ]*$/i,
+  nl: /^[0-9A-ZÉËÏÓÖÜ]*$/i,
+  pl: /^[0-9A-ZĄĆĘŚŁŃÓŻŹ]*$/i,
+  pt: /^[0-9A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ]*$/i,
+  ru: /^[0-9А-ЯЁ]*$/i,
+  sr: /^[0-9A-ZČĆŽŠĐ]*$/i,
+  tr: /^[0-9A-ZÇĞİıÖŞÜ]*$/i,
+  uk: /^[0-9А-ЩЬЮЯЄIЇҐ]*$/i,
+  ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/
+};
+
+var alphaDash = {
+  en: /^[0-9A-Z_-]*$/i,
+  cs: /^[0-9A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ_-]*$/i,
+  da: /^[0-9A-ZÆØÅ_-]*$/i,
+  de: /^[0-9A-ZÄÖÜß_-]*$/i,
+  es: /^[0-9A-ZÁÉÍÑÓÚÜ_-]*$/i,
+  fr: /^[0-9A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ_-]*$/i,
+  nl: /^[0-9A-ZÉËÏÓÖÜ_-]*$/i,
+  hu: /^[0-9A-ZÁÉÍÓÖŐÚÜŰ_-]*$/i,
+  pl: /^[0-9A-ZĄĆĘŚŁŃÓŻŹ_-]*$/i,
+  pt: /^[0-9A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ_-]*$/i,
+  ru: /^[0-9А-ЯЁ_-]*$/i,
+  sr: /^[0-9A-ZČĆŽŠĐ_-]*$/i,
+  tr: /^[0-9A-ZÇĞİıÖŞÜ_-]*$/i,
+  uk: /^[0-9А-ЩЬЮЯЄIЇҐ_-]*$/i,
+  ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ_-]*$/
+};
+
+var alpha$$1 = function (value, ref) {
+  if ( ref === void 0 ) ref = [null];
+  var locale = ref[0];
+
+  // Match at least one locale.
+  if (! locale) {
+    return Object.keys(alpha$1).some(function (loc) { return alpha$1[loc].test(value); });
+  }
+
+  return (alpha$1[locale] || alpha$1.en).test(value);
+};
+
+var alpha_dash = function (value, ref) {
+  if ( ref === void 0 ) ref = [null];
+  var locale = ref[0];
+
+  // Match at least one locale.
+  if (! locale) {
+    return Object.keys(alphaDash).some(function (loc) { return alphaDash[loc].test(value); });
+  }
+
+  return (alphaDash[locale] || alphaDash.en).test(value);
+};
+
+var alpha_num = function (value, ref) {
+  if ( ref === void 0 ) ref = [null];
+  var locale = ref[0];
+
+  // Match at least one locale.
+  if (! locale) {
+    return Object.keys(alphanumeric).some(function (loc) { return alphanumeric[loc].test(value); });
+  }
+
+  return (alphanumeric[locale] || alphanumeric.en).test(value);
+};
+
+var alpha_spaces = function (value, ref) {
+  if ( ref === void 0 ) ref = [null];
+  var locale = ref[0];
+
+  // Match at least one locale.
+  if (! locale) {
+    return Object.keys(alphaSpaces).some(function (loc) { return alphaSpaces[loc].test(value); });
+  }
+
+  return (alphaSpaces[locale] || alphaSpaces.en).test(value);
+};
 
 var between = function (value, ref) {
 	var min = ref[0];
@@ -320,6 +437,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var default_email_options = {
   allow_display_name: false,
+  require_display_name: false,
   allow_utf8_local_part: true,
   require_tld: true
 };
@@ -338,10 +456,12 @@ function isEmail(str, options) {
   (0, _assertString2.default)(str);
   options = (0, _merge2.default)(options, default_email_options);
 
-  if (options.allow_display_name) {
+  if (options.require_display_name || options.allow_display_name) {
     var display_email = str.match(displayName);
     if (display_email) {
       str = display_email[1];
+    } else if (options.require_display_name) {
+      return false;
     }
   }
 
@@ -633,7 +753,7 @@ function checkHost(host, matches) {
 
 function isURL(url, options) {
   (0, _assertString2.default)(url);
-  if (!url || url.length >= 2083 || /\s/.test(url)) {
+  if (!url || url.length >= 2083 || /[\s<>]/.test(url)) {
     return false;
   }
   if (url.indexOf('mailto:') === 0) {
@@ -737,7 +857,7 @@ var Rules = {
   alpha_dash: alpha_dash,
   alpha_num: alpha_num,
   alpha_spaces: alpha_spaces,
-  alpha: alpha,
+  alpha: alpha$$1,
   between: between,
   confirmed: confirmed,
   credit_card: credit_card,
@@ -1021,9 +1141,7 @@ var debounce = function (callback, wait, immediate) {
   if ( wait === void 0 ) wait = 0;
 
   var timeout;
-  if (wait == 0) {
-    return callback;
-  }
+
   return function () {
     var args = [], len = arguments.length;
     while ( len-- ) args[ len ] = arguments[ len ];
@@ -1053,9 +1171,7 @@ var warn = function (message) {
 /**
  * Checks if the value is an object.
  */
-var isObject = function (object) {
-  return object !== null && object && typeof object === 'object' && ! Array.isArray(object);
-};
+var isObject = function (object) { return object !== null && object && typeof object === 'object' && ! Array.isArray(object); };
 
 /**
  * Checks if a function is callable.
@@ -1080,8 +1196,8 @@ var addClass = function (el, className) {
   if (el.classList) {
     el.classList.add(className);
     return;
-  } 
-  
+  }
+
   if (!hasClass(el, className)) {
     el.className += " " + className;
   }
@@ -1173,7 +1289,7 @@ var find = function (array, predicate) {
 
 /**
  * Gets the rules from a binding value or the element dataset.
- * 
+ *
  * @param {String} expression The binding expression.
  * @param {Object|String} value The binding value.
  * @param {element} el The element.
@@ -1189,7 +1305,7 @@ var getRules = function (expression, value, el) {
   }
 
   if (~['string', 'object'].indexOf(typeof value.rules)) {
-    return value.rules
+    return value.rules;
   }
 
   return value;
@@ -2457,10 +2573,12 @@ Validator.prototype._setAriaRequiredAttribute = function _setAriaRequiredAttribu
 /**
  * Validates each value against the corresponding field validations.
  * @param{object} values The values to be validated.
+ * @param{String} scope The scope to be applied on validation.
  * @return {Promise} Returns a promise with the validation result.
  */
-Validator.prototype.validateAll = function validateAll (values) {
+Validator.prototype.validateAll = function validateAll (values, scope) {
     var this$1 = this;
+    if ( scope === void 0 ) scope = '__global__';
 
   var normalizedValues;
   if (! values || typeof values === 'string') {
@@ -2470,7 +2588,8 @@ Validator.prototype.validateAll = function validateAll (values) {
     normalizedValues = {};
     Object.keys(values).forEach(function (key) {
       normalizedValues[key] = {
-        value: values[key]
+        value: values[key],
+        scope: scope
       };
     });
   }
@@ -2481,8 +2600,8 @@ Validator.prototype.validateAll = function validateAll (values) {
     false // do not throw
   ); });
 
-  return Promise.all(promises).then(function (values) {
-    var valid = values.every(function (t) { return t; });
+  return Promise.all(promises).then(function (results) {
+    var valid = results.every(function (t) { return t; });
     if (! valid) {
       throw new ValidatorException('Validation Failed');
     }
@@ -2668,9 +2787,7 @@ ListenerGenerator.prototype._checkboxListener = function _checkboxListener () {
 ListenerGenerator.prototype._validate = function _validate (value) {
   return this.vm.$validator.validate(
     this.fieldName, value, this.scope || getScope(this.el)
-    ).catch(function (result) {
-      return result;
-    });
+    ).catch(function (result) { return result; });
 };
 
   /**
@@ -2707,8 +2824,11 @@ ListenerGenerator.prototype._attachValidatorEvent = function _attachValidatorEve
         return;
       }
 
-      target.addEventListener('input', listener);
-      this$1.callbacks.push({ name: 'input', listener: listener, el: target });
+      var events = getDataAttribute(this$1.el, 'validate-on') || 'input|blur';
+      events.split('|').forEach(function (e) {
+        target.addEventListener(e, listener);
+        this$1.callbacks.push({ name: e, listener: listener, el: target });
+      });
     });
   }
 };
@@ -2900,9 +3020,7 @@ ListenerGenerator.prototype._attachModelWatcher = function _attachModelWatcher (
       var debounced = debounce(function (value) {
         this$1.vm.$validator.validate(
           this$1.fieldName, value, this$1.scope || getScope(this$1.el)
-          ).catch(function (result) {
-            return result
-          });
+        ).catch(function (result) { return result; });
       }, getDataAttribute(this$1.el, 'delay') || this$1.options.delay);
       this$1.unwatch = this$1.vm.$watch(arg, debounced, { deep: true });
       // No need to attach it on element as it will use the vue watcher.
@@ -2936,6 +3054,10 @@ ListenerGenerator.prototype.attach = function attach () {
       listeners: this
     }
   );
+
+  if (this.binding.modifiers.disable) {
+    return;
+  }
 
   this._attachValidatorEvent();
   var arg = this._getArg();
